@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<!-- saved from url=(0085)file:///C:/Users/Owais/OneDrive/Desktop/Pictures/Documents/Owais/Geography/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>Tokyo Building Defence Mechanism</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      position: relative;
+      color: #111;
+    }
+
+    /* Background */
+    body::before {
+      content: "";
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1503818454-2a008dc38d43?q=80&w=1200&auto=format&fit=crop') no-repeat center/cover;
+      filter: blur(8px) brightness(0.6);
+      z-index: -1;
+    }
+
+    /* Header */
+    header {
+      background: rgba(29, 53, 87, 0.9);
+      color: white;
+      padding: 20px;
+      position: relative;
+    }
+
+    .name {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      font-weight: bold;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    header h1 {
+      text-align: center;
+      margin: 0;
+    }
+
+    header p {
+      text-align: center;
+      margin: 5px 0;
+    }
+
+    /* Button */
+    .shake-btn {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      background: #e63946;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .shake-btn:hover {
+      background: #c9182b;
+      transform: scale(1.05);
+    }
+
+    /* Layout */
+    .main-layout {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 40px auto;
+      align-items: flex-start;
+    }
+
+    /* LEFT SIDE */
+    .design-box {
+      width: 420px;
+      background: rgba(255,255,255,0.9);
+      padding: 25px;
+      border-radius: 16px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+
+    .design-box h2 {
+      margin-top: 0;
+    }
+
+    .design-box p {
+      margin: 12px 0;
+      line-height: 1.5;
+    }
+
+    /* RIGHT SIDE */
+    .container {
+      position: relative;
+      width: 650px;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+
+    /* Labels */
+    .label {
+      position: absolute;
+      background: white;
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    .label:hover {
+      background: #457b9d;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    /* Improved Info popup */
+    .info-box {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 340px;
+      background: white;
+      padding: 18px;
+      border-radius: 14px;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .info-box h3 {
+      margin-top: 0;
+      color: #1d3557;
+    }
+
+    .info-box button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 8px;
+      background: #e63946;
+      color: white;
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Shake Animation */
+    @keyframes shake {
+      0% { transform: translate(0,0); }
+      25% { transform: translate(5px,-5px); }
+      50% { transform: translate(-5px,5px); }
+      75% { transform: translate(4px,-4px); }
+      100% { transform: translate(0,0); }
+    }
+
+    .shake {
+      animation: shake 1.2s ease;
+    }
+
+    /* Label positions */
+    .l1 { top: 100px; left: 370px; }
+    .l2 { top: 250px; left: 180px; }
+    .l3 { top: 400px; left: 400px; }
+    .l4 { top: 500px; left: 150px; }
+    .l5 { top: 700px; left: 150px; }
+    .l6 { top: 850px; left: 400px; }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="name">Owais Kaladgi</div>
+  <h1>Tokyo Building Defence Mechanism</h1>
+  <p>Earthquake-Resistant techniques to protect structures from seismic activity - GEOGRAPHY SUMMATIVE</p>
+
+  <button onclick="shakeBuilding()" class="shake-btn">
+    🌍 Simulate Earthquake
+  </button>
+</header>
+
+<div class="main-layout">
+
+  <!-- LEFT INFO -->
+  <div class="design-box">
+    <h2>🏗️ Structure Design – Earthquake-Resistant Engineering</h2>
+
+    <p><b>Type of Structure:</b><br>
+    A modern skyscraper designed for earthquake-prone cities like Tokyo. It is built to face disaster flexibly rather than rigidly, where there are more chances of destruction. The material is durable and withstands earthquakes up to 8.0 magnitude.</p>
+
+    <p><b>Materials Used:</b><br>
+    Steel is used for flexibility, reinforced armored concrete for strength, and rubber-steel layers for base isolation. These materials help absorb and reduce seismic energy.</p>
+
+    <p><b>Key Design Elements:</b><br>
+    Base isolation systems, shock absorbers, tuned mass damper, and deep foundations all work together to control movement and prevent collapse. Modern technology helps these elements work together more easily.</p>
+
+    <p><b>How It Handles Earthquakes:</b><br><br>
+
+    <b>Before:</b> The structure is formed with strong materials and smart design. Monthly checks ensure the function of the technology.<br><br>
+
+    <b>During:</b> During earthquakes, the structure bends to avoid being rigid, absorbs energy to lower the impact, and stays stable, ensuring the safety of the inhabitants.<br><br>
+
+    <b>After:</b> Once the earthquake subsides, there is less damage, allowing faster repairs and fewer casualties.</p>
+  </div>
+
+  <!-- RIGHT BUILDING -->
+  <div class="container">
+
+    <img src="./Tokyo Building Defence Mechanism_files/photo-1503818454-2a008dc38d43">
+
+    <div class="label l1" onclick="showInfo(&#39;Tuned Mass Damper&#39;, &#39;A tuned mass damper is placed at the top of the building to reduce swaying. It moves opposite to the building motion, helping stabilize the structure during strong earthquakes and high winds.&#39;)">Tuned Mass Damper</div>
+
+    <div class="label l2" onclick="showInfo(&#39;Flexible Steel Frame&#39;, &#39;The steel frame allows the building to bend instead of breaking. This flexibility prevents cracks and structural failure when seismic waves pass through the building.&#39;)">Steel Frame</div>
+
+    <div class="label l3" onclick="showInfo(&#39;Shock Absorbers&#39;, &#39;Shock absorbers are installed throughout the structure to reduce vibrations. They act like car suspension systems, minimizing shaking and protecting the building’s core.&#39;)">Shock Absorbers</div>
+
+    <div class="label l4" onclick="showInfo(&#39;Energy Dissipation System&#39;, &#39;Energy dissipation devices absorb seismic energy and reduce the force transferred through the building. This helps prevent major damage during earthquakes.&#39;)">Energy Absorption</div>
+
+    <div class="label l5" onclick="showInfo(&#39;Base Isolation&#39;, &#39;Base isolation separates the building from ground motion using rubber and steel layers. This reduces the amount of earthquake energy that enters the structure.&#39;)">Base Isolation</div>
+
+    <div class="label l6" onclick="showInfo(&#39;Deep Foundation&#39;, &#39;The deep foundation anchors the building into stable ground layers below the surface. This prevents tilting and increases stability during earthquakes.&#39;)">Deep Foundation</div>
+
+  </div>
+
+</div>
+
+<!-- INFO POPUP -->
+<div class="info-box" id="infoBox">
+  <h3 id="infoTitle"></h3>
+  <p id="infoText"></p>
+  <button onclick="closeInfo()">Close</button>
+</div>
+
+<script>
+function showInfo(title, text) {
+  document.getElementById('infoTitle').innerText = title;
+  document.getElementById('infoText').innerText = text;
+  document.getElementById('infoBox').style.display = 'block';
+}
+
+function closeInfo() {
+  document.getElementById('infoBox').style.display = 'none';
+}
+
+function shakeBuilding() {
+  const building = document.querySelector('.container');
+  building.classList.add('shake');
+
+  setTimeout(() => {
+    building.classList.remove('shake');
+  }, 1200);
+}
+</script>
+
+
+</body></html>
