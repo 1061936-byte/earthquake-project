@@ -1,342 +1,348 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
   <meta charset="UTF-8">
   <title>Tokyo Building Defence Mechanism</title>
 
   <style>
-    body {
-      font-family: Arial;
-      margin: 0;
-      position: relative;
-      color: #111;
-    }
+  body {
+    font-family: Arial;
+    margin: 0;
+    color: #111;
+  }
 
-    /* Background */
-    body::before {
-      content: "";
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      background: url('https://images.unsplash.com/photo-1503818454-2a008dc38d43?q=80&w=1200&auto=format&fit=crop') no-repeat center/cover;
-      filter: blur(8px) brightness(0.6);
-      z-index: -1;
-    }
+  /* Background */
+  body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1503818454-2a008dc38d43?q=80&w=1200&auto=format&fit=crop') no-repeat center/cover;
+    filter: blur(8px) brightness(0.6);
+    z-index: -1;
+  }
 
-    /* Header */
-    header {
-      background: rgba(29, 53, 87, 0.9);
-      color: white;
-      padding: 20px;
-      position: relative;
-    }
+  /* Header */
+  header {
+    background: rgba(29,53,87,0.9);
+    color: white;
+    padding: 20px;
+    position: relative;
+  }
 
-    .name {
-      position: absolute;
-      left: 20px;
-      top: 20px;
-      font-weight: bold;
-      font-size: 14px;
-      opacity: 0.9;
-    }
+  .name {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    font-size: 14px;
+  }
 
-    header h1 {
-      text-align: center;
-      margin: 0;
-    }
+  header h1, header p {
+    text-align: center;
+    margin: 5px;
+  }
 
-    header p {
-      text-align: center;
-      margin: 5px 0;
-    }
+  .shake-btn {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #e63946;
+    color: white;
+    cursor: pointer;
+  }
 
-    /* Button */
-    .shake-btn {
-      display: block;
-      margin: 10px auto;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 10px;
-      background: #e63946;
-      color: white;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+  /* Layout */
+  .main-layout {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 40px auto;
+  }
 
-    .shake-btn:hover {
-      background: #c9182b;
-      transform: scale(1.05);
-    }
+  /* Left */
+  .design-box {
+    width: 420px;
+    background: rgba(255,255,255,0.9);
+    padding: 25px;
+    border-radius: 16px;
+  }
 
-    /* Layout */
-    .main-layout {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      max-width: 1200px;
-      margin: 40px auto;
-      align-items: flex-start;
-    }
+  /* Right */
+  .container {
+    position: relative;
+    width: 650px;
+  }
 
-    /* LEFT SIDE */
-    .design-box {
-      width: 420px;
-      background: rgba(255,255,255,0.9);
-      padding: 25px;
-      border-radius: 16px;
-      backdrop-filter: blur(6px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    }
+  img {
+    width: 100%;
+    border-radius: 12px;
+  }
 
-    .design-box h2 {
-      margin-top: 0;
-    }
+  /* Labels */
+  .label {
+    position: absolute;
+    background: white;
+    padding: 6px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
 
-    .design-box p {
-      margin: 12px 0;
-      line-height: 1.5;
-    }
+  .l1 { top:100px; left:370px;}
+  .l2 { top:250px; left:180px;}
+  .l3 { top:400px; left:400px;}
+  .l4 { top:500px; left:150px;}
+  .l5 { top:700px; left:150px;}
+  .l6 { top:850px; left:400px;}
 
-    /* RIGHT SIDE */
-    .container {
-      position: relative;
-      width: 650px;
-    }
+  /* Sections */
+  .section {
+    max-width: 1100px;
+    margin: 30px auto;
+    background: rgba(255,255,255,0.9);
+    padding: 25px;
+    border-radius: 16px;
+    cursor: pointer;
+  }
 
-    img {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.4);
-    }
+  /* Smaller image + placeholder */
+  .section img {
+    width: 60%;
+    height: 260px; /* was 200 */
+    background: black;
+    display: block;
+    margin: 0 auto 15px auto;
+    object-fit: cover;
+    border-radius: 12px;
+  }
 
-    /* Labels */
-    .label {
-      position: absolute;
-      background: white;
-      padding: 6px 10px;
-      border-radius: 20px;
-      font-size: 13px;
-      cursor: pointer;
-      transition: 0.2s;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    }
-
-    .label:hover {
-      background: #457b9d;
-      color: white;
-      transform: scale(1.1);
-    }
-
-    /* Improved Info popup */
-    .info-box {
-      position: fixed;
-      bottom: 20px;
-      left: 20px;
-      width: 340px;
-      background: white;
-      padding: 18px;
-      border-radius: 14px;
-      display: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-      animation: fadeIn 0.3s ease;
-    }
-
-    .info-box h3 {
-      margin-top: 0;
-      color: #1d3557;
-    }
-
-    .info-box button {
-      margin-top: 10px;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 8px;
-      background: #e63946;
-      color: white;
-      cursor: pointer;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Shake Animation */
-    @keyframes shake {
-      0% { transform: translate(0,0); }
-      25% { transform: translate(5px,-5px); }
-      50% { transform: translate(-5px,5px); }
-      75% { transform: translate(4px,-4px); }
-      100% { transform: translate(0,0); }
-    }
-
-    .shake {
-      animation: shake 1.2s ease;
-    }
-
-    /* Label positions */
-    .l1 { top: 100px; left: 370px; }
-    .l2 { top: 250px; left: 180px; }
-    .l3 { top: 400px; left: 400px; }
-    .l4 { top: 500px; left: 150px; }
-    .l5 { top: 700px; left: 150px; }
-    .l6 { top: 850px; left: 400px; }
-
-    /* NEW TEXT SECTIONS */
-.section {
-  max-width: 1100px;
-  margin: 30px auto;
-  background: rgba(255,255,255,0.9);
-  padding: 25px;
-  border-radius: 16px;
-  backdrop-filter: blur(6px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  text-align: left;
+  /* FULLSCREEN */
+ .fullscreen {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:white;
+  z-index:999998;  /* just below button */
+  padding:40px;
+  overflow:auto;
 }
 
-.section h2 {
-  margin-top: 0;
-  color: #1d3557;
+  .close-btn {
+  position: fixed;   /* CHANGED from absolute */
+  top: 20px;
+  right: 20px;
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 999999;   /* VERY HIGH so nothing blocks it */
 }
+
+  /* Popup */
+  #popup {
+  pointer-events: auto;
+}
+
+  /* Popup image placeholder */
+  .popup img {
+  width: 60%;
+  height: 420px; /* taller */
+  object-fit: cover;
+  background: black;
+  display: block;
+  margin: 20px auto;
+  border-radius: 12px;
+}
+  }
 
   </style>
-</head>
+  </head>
 
-<body>
+  <body>
 
-<header>
+  <header>
   <div class="name">Owais Kaladgi</div>
   <h1>Tokyo Building Defence Mechanism</h1>
   <p>Earthquake-Resistant techniques to protect structures from seismic activity - GEOGRAPHY SUMMATIVE</p>
 
-  <button onclick="shakeBuilding()" class="shake-btn">
-    🌍 Simulate Earthquake
-  </button>
-</header>
+  <button onclick="shakeBuilding()" class="shake-btn">🌍 Simulate Earthquake</button>
+  </header>
 
-<div class="main-layout">
+  <div class="main-layout">
 
-  <!-- LEFT INFO -->
   <div class="design-box">
-    <h2>🏗️ Structure Design – Earthquake-Resistant Engineering</h2>
+  <h2>🏗️ Structure Design – Earthquake-Resistant Engineering</h2>
 
-    <p><b>Type of Structure:</b><br>
-    A modern skyscraper designed for earthquake-prone cities like Tokyo. It is built to face disaster flexibly rather than rigidly, where there are more chances of destruction. The material is durable and withstands earthquakes up to 8.0 magnitude.</p>
+  <p><b>Type of Structure:</b><br>
+  A modern skyscraper designed for earthquake-prone cities like Tokyo. It is built to face disaster flexibly rather than rigidly, where there are more chances of destruction. The material is durable and withstands earthquakes up to 8.0 magnitude.</p>
 
-    <p><b>Materials Used:</b><br>
-    Steel is used for flexibility, reinforced armored concrete for strength, and rubber-steel layers for base isolation. These materials help absorb and reduce seismic energy.</p>
+  <p><b>Materials Used:</b><br>
+  Steel is used for flexibility, reinforced armored concrete for strength, and rubber-steel layers for base isolation. These materials help absorb and reduce seismic energy.</p>
 
-    <p><b>Key Design Elements:</b><br>
-    Base isolation systems, shock absorbers, tuned mass damper, and deep foundations all work together to control movement and prevent collapse. Modern technology helps these elements work together more easily.</p>
+  <p><b>Key Design Elements:</b><br>
+  Base isolation systems, shock absorbers, tuned mass damper, and deep foundations all work together to control movement and prevent collapse. Modern technology helps these elements work together more easily.</p>
 
-    <p><b>How It Handles Earthquakes:</b><br><br>
+  <p><b>How It Handles Earthquakes:</b><br><br>
 
-    <b>Before:</b> The structure is formed with strong materials and smart design. Monthly checks ensure the function of the technology.<br><br>
+  <b>Before:</b> The structure is formed with strong materials and smart design. Monthly checks ensure the function of the technology.<br><br>
 
-    <b>During:</b> During earthquakes, the structure bends to avoid being rigid, absorbs energy to lower the impact, and stays stable, ensuring the safety of the inhabitants.<br><br>
+  <b>During:</b> During earthquakes, the structure bends to avoid being rigid, absorbs energy to lower the impact, and stays stable, ensuring the safety of the inhabitants.<br><br>
 
-    <b>After:</b> Once the earthquake subsides, there is less damage, allowing faster repairs and fewer casualties.</p>
+  <b>After:</b> Once the earthquake subsides, there is less damage, allowing faster repairs and fewer casualties.</p>
   </div>
 
-  <!-- RIGHT BUILDING -->
-  <div class="container">
+  <div class="container" id="building">
+<img src="https://images.unsplash.com/photo-1503818454-2a008dc38d43?q=80&w=687&auto=format&fit=crop">
 
-    <img src="https://images.unsplash.com/photo-1503818454-2a008dc38d43?q=80&w=687&auto=format&fit=crop">
+<div class="label l1" onclick="openPopup(
+'Tuned Mass Damper',
+'A tuned mass damper is placed at the top of the building to reduce swaying. It moves opposite to the building motion, helping stabilize the structure during strong earthquakes and high winds.',
+'https://upload.wikimedia.org/wikipedia/commons/4/4a/Tuned_mass_damper_-_Taipei_101_-_Wikimania_2007_0224.jpg'
+)">Tuned Mass Damper</div>
 
-    <div class="label l1" onclick="showInfo('Tuned Mass Damper', 'A tuned mass damper is placed at the top of the building to reduce swaying. It moves opposite to the building motion, helping stabilize the structure during strong earthquakes and high winds.')">Tuned Mass Damper</div>
+<div class="label l2" onclick="openPopup(
+'Flexible Steel Frame',
+'The steel frame allows the building to bend instead of breaking. This flexibility prevents cracks and structural failure when seismic waves pass through the building.',
+'https://www.servicesteel.org/wp-content/uploads/2024/06/steel-skyscraper-700x467.jpg'
+)">Steel Frame</div>
 
-    <div class="label l2" onclick="showInfo('Flexible Steel Frame', 'The steel frame allows the building to bend instead of breaking. This flexibility prevents cracks and structural failure when seismic waves pass through the building.')">Steel Frame</div>
+<div class="label l3" onclick="openPopup(
+'Shock Absorbers',
+'Shock absorbers are installed throughout the structure to reduce vibrations. They act like car suspension systems, minimizing shaking and protecting the building’s core.',
+'https://www.pbs.org/wgbh/nova/media/images/utah-capitol-bearings.width-990_2TzjDjU.jpg'
+)">Shock Absorbers</div>
 
-    <div class="label l3" onclick="showInfo('Shock Absorbers', 'Shock absorbers are installed throughout the structure to reduce vibrations. They act like car suspension systems, minimizing shaking and protecting the building’s core.')">Shock Absorbers</div>
+<div class="label l4" onclick="openPopup(
+'Energy Dissipation System',
+'Energy dissipation devices absorb seismic energy and reduce the force transferred through the building. This helps prevent major damage during earthquakes.',
+'https://buildcivil.wordpress.com/wp-content/uploads/2013/11/damper4.jpg'
+)">Energy Absorption</div>
 
-    <div class="label l4" onclick="showInfo('Energy Dissipation System', 'Energy dissipation devices absorb seismic energy and reduce the force transferred through the building. This helps prevent major damage during earthquakes.')">Energy Absorption</div>
+<div class="label l5" onclick="openPopup(
+'Base Isolation',
+'Base isolation separates the building from ground motion using rubber and steel layers. This reduces the amount of earthquake energy that enters the structure.',
+'https://www.eigenplus.com/images/eigen-base-isoltion.png'
+)">Base Isolation</div>
 
-    <div class="label l5" onclick="showInfo('Base Isolation', 'Base isolation separates the building from ground motion using rubber and steel layers. This reduces the amount of earthquake energy that enters the structure.')">Base Isolation</div>
+<div class="label l6" onclick="openPopup(
+'Deep Foundation',
+'The deep foundation anchors the building into stable ground layers below the surface. This prevents tilting and increases stability during earthquakes.',
+'https://s3da-design.com/wp-content/uploads/2020/02/Shallow-and-Deep-Foundations.jpg'
+)">Deep Foundation</div>
 
-    <div class="label l6" onclick="showInfo('Deep Foundation', 'The deep foundation anchors the building into stable ground layers below the surface. This prevents tilting and increases stability during earthquakes.')">Deep Foundation</div>
-
+</div>
   </div>
 
-</div>
+  <!-- FULLSCREEN POPUP -->
+  <div id="popup" class="popup">
+  <button class="close-btn" onclick="closePopup()">Exit</button>
 
-<!-- INFO POPUP -->
-<div class="info-box" id="infoBox">
-  <h3 id="infoTitle"></h3>
-  <p id="infoText"></p>
-  <button onclick="closeInfo()">Close</button>
-</div>
+  <h2 id="popTitle"></h2>
 
-<script>
-function showInfo(title, text) {
-  document.getElementById('infoTitle').innerText = title;
-  document.getElementById('infoText').innerText = text;
-  document.getElementById('infoBox').style.display = 'block';
+  <img id="popImage">
+
+  <p id="popText"></p>
+  </div>
+
+  <script>
+ function openPopup(title, text, img){
+  const popup = document.getElementById("popup");
+
+  popup.style.display = "block";
+  popup.classList.add("fullscreen"); // ADD THIS
+
+  document.getElementById("popTitle").innerText = title;
+  document.getElementById("popText").innerText = text;
+
+  const image = document.getElementById("popImage");
+  image.src = img;
+  image.style.display = "block";
 }
 
-function closeInfo() {
-  document.getElementById('infoBox').style.display = 'none';
+function closePopup(){
+  const popup = document.getElementById("popup");
+
+  popup.style.display = "none";
+
+  document.getElementById("popImage").src = "";
 }
 
-function shakeBuilding() {
-  const building = document.querySelector('.container');
-  building.classList.add('shake');
+  function openSection(el){
+    el.classList.add("fullscreen");
 
-  setTimeout(() => {
-    building.classList.remove('shake');
-  }, 1200);
-}
-</script>
-<!-- 🔽 NEW TEXT BOXES (ADDED BELOW YOUR DESIGN) -->
+    // PREVENT multiple buttons bug
+    if (el.querySelector(".close-btn")) return;
 
-<div class="section">
-  <h2>Existing Designs vs Our Improvements</h2>
-  <p>
-    Tokyo already uses advanced earthquake-resistant designs such as base isolation,
-    flexible steel frames, and tuned mass dampers. These systems allow buildings to
-    safely absorb and respond to seismic activity.
-    <br><br>
-    Our design improves this by combining all systems together more efficiently,
-    increasing energy absorption and stability. This reduces overall damage and
-    improves safety even during stronger earthquakes.
-  </p>
-</div>
+    let btn = document.createElement("button");
+    btn.innerText = "Exit";
+    btn.className = "close-btn";
 
-<div class="section">
+    btn.onclick = function(e){
+      e.stopPropagation(); // IMPORTANT FIX
+      el.classList.remove("fullscreen");
+      btn.remove();
+    };
+
+    el.appendChild(btn);
+  }
+
+  function shakeBuilding(){
+    document.getElementById('building').classList.add('shake');
+    setTimeout(()=>{document.getElementById('building').classList.remove('shake');},1200);
+  }
+  </script>
+
+  <!-- SECTIONS -->
+
+  <div class="section" onclick="openSection(this)">
+  <img src="https://m.media-amazon.com/images/I/71nL9opDbeL._AC_SL1001_.jpg">
+  <h2>Existing Designs vs My Improvements</h2>
+  <p>Tokyo already uses advanced earthquake-resistant designs such as base isolation,
+  flexible steel frames, and tuned mass dampers. These systems allow buildings to
+  safely absorb and respond to seismic activity.
+  <br><br>
+  My design improves this by combining all systems together more efficiently,
+  increasing energy absorption and stability. This reduces overall damage and
+  improves safety even during stronger earthquakes.</p>
+  </div>
+
+  <div class="section" onclick="openSection(this)">
+  <img src="https://www.decanterchina.com/assets/images/article/full/137828_slider-02-an-aerial-view-that-clearly-shows-the-san-andreas-fault.jpg?1500372466">
   <h2>How Earthquakes Form</h2>
-  <p>
-    Earthquakes occur when tectonic plates beneath the Earth's surface become stuck
-    due to friction. Over time, pressure builds up until it is suddenly released.
-    This release sends out seismic waves that cause the ground to shake.
-  </p>
-</div>
+  <p>Earthquakes occur when tectonic plates beneath the Earth's surface become stuck
+  due to friction. Over time, pressure builds up until it is suddenly released.
+  This release sends out seismic waves that cause the ground to shake.</p>
+  </div>
 
-<div class="section">
+  <div class="section" onclick="openSection(this)">
+  <img src="https://media.istockphoto.com/id/1467704371/vector/the-pacific-ring-of-fire.jpg?s=612x612&w=0&k=20&c=qzZSvedBJP4K_JjmYAci_5--XkDDajG041DvfgacRYc=">
   <h2>Why Tokyo is Earthquake-Prone</h2>
-  <p>
-    Tokyo is located along the Ring of Fire, where several tectonic plates meet.
-    This makes it one of the most earthquake-prone regions in the world.
-    Frequent plate movement increases the chances of strong and dangerous earthquakes.
-  </p>
-</div>
+  <p>Tokyo is located along the Ring of Fire, where several tectonic plates meet.
+  This makes it one of the most earthquake-prone regions in the world.
+  Frequent plate movement increases the chances of strong and dangerous earthquakes.</p>
+  </div>
 
-<div class="section">
+  <div class="section" onclick="openSection(this)">
+  <img src="https://www.kark.com/wp-content/uploads/sites/85/2024/01/6598c39bc18c75.71138667.jpeg?w=2560&h=1440&crop=1">
   <h2>Main Hazards (Short-Term & Long-Term)</h2>
-  <p>
-    <b>Short-term effects:</b> Ground shaking, building collapse, fires,
-    injuries, and possible tsunamis.
-    <br><br>
-    <b>Long-term effects:</b> Economic loss, rebuilding costs, homelessness,
-    and psychological impacts such as stress and trauma.
-  </p>
-</div>
+  <p><b>Short-term effects:</b> Ground shaking, building collapse, fires,
+  injuries, and possible tsunamis.
+  <br><br>
+  <b>Long-term effects:</b> Economic loss, rebuilding costs, homelessness,
+  and psychological impacts such as stress and trauma.</p>
+  </div>
 
-<div class="section">
+  <div class="section" onclick="openSection(this)">
+  <img src="https://i.abcnewsfe.com/a/1426adf1-759c-42ce-afee-61017fa7a717/japan-earthquake_1704103460063_hpMain.jpg">
   <h2>Challenges After the Disaster</h2>
-  <p>
-    After an earthquake, people may struggle to access food, clean water, and shelter.
-    Damaged roads and infrastructure can slow down emergency response.
-    Communication systems may fail, and full recovery can take months or even years.
-  </p>
-</div>
-</body>
-</html>
+  <p>After an earthquake, people may struggle to access food, clean water, and shelter.
+  Damaged roads and infrastructure can slow down emergency response.
+  Communication systems may fail, and full recovery can take months or even years.</p>
+  </div>
+
+  </body>
+  </html>
